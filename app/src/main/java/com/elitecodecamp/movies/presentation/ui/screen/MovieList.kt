@@ -14,11 +14,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,22 +26,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImagePainter
+import coil.compose.SubcomposeAsyncImage
+import coil.compose.SubcomposeAsyncImageContent
 import com.elitecodecamp.movies.data.model.Movie
-import com.elitecodecamp.movies.data.model.MovieDto
 
 @Composable
 fun MovieList(viewModel: MovieViewModel){
     val movieData by viewModel.movieData.collectAsState()
-
     LaunchedEffect(Unit){
         viewModel.fetchMovieData()
     }
-
     movieData?.let { MainContent(it.Movies) }
-
-
 }
 
 
@@ -87,12 +82,35 @@ fun MovieRow(movie: Movie, onItemClick: (String) -> Unit){
                     .size(100.dp),
                 shape = RectangleShape
             ) {
-                Icon(imageVector = Icons.Default.AccountBox,
-                    contentDescription = "Movie Image")
+
+                ConditionalImage(
+                    model = movie.primaryImage?.url, // Assuming primaryImage is a nullable property
+                    contentDescription = "${movie.titleText} image"
+                )
+
             }
             Text(movie.titleText.text)
         }
 
+    }
+}
+
+@Composable
+fun ConditionalImage(model: String?, contentDescription: String) {
+    if (model != null) {
+        SubcomposeAsyncImage(
+            model = model,
+            contentDescription = contentDescription
+        ) {
+            val state = painter.state
+            if (state is AsyncImagePainter.State.Loading || state is AsyncImagePainter.State.Error) {
+                CircularProgressIndicator()
+            } else {
+                SubcomposeAsyncImageContent()
+            }
+        }
+    } else {
+        // You can place a placeholder or some default content here
     }
 }
 

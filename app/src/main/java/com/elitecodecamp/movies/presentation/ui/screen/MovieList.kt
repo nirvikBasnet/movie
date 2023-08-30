@@ -66,7 +66,7 @@ fun MovieRow(movie: Movie, onItemClick: (String) -> Unit){
         modifier = Modifier.padding(4.dp).fillMaxWidth()
             .height(130.dp)
             .clickable {
-               // onItemClick(movie)
+               onItemClick(movie.titleText.toString())
             },
         shape = RoundedCornerShape(CornerSize(16.dp)),
         elevation = CardDefaults.cardElevation(6.dp)

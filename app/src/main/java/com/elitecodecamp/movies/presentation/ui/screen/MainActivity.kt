@@ -37,41 +37,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.elitecodecamp.movies.presentation.ui.navigation.MovieNavigation
 import com.elitecodecamp.movies.presentation.ui.theme.MoviesTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val movieViewModel: MovieViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApp { MovieList(movieViewModel) }
+           MovieNavigation()
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MyApp(content: @Composable () ->Unit ){
-    MoviesTheme {
-       Scaffold (
-          topBar = {
-              TopAppBar(
-                  title = { Text("Movies") },
-                  colors = TopAppBarDefaults.largeTopAppBarColors(Color.Magenta)
-              )
-          }
-               ){
-           Box(
-               modifier = Modifier.padding(it)
-           ) {
-               content()
-           }
-
-
-       }
-    }
-}
 
 

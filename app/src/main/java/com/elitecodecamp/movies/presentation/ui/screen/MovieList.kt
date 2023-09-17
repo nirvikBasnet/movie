@@ -138,8 +138,6 @@ fun MovieRow(movie: Movie, onItemClick: (String) -> Unit){
                         },
                         modifier = Modifier.padding(6.dp))
 
-                        Divider()
-                        Text(text = "Director: ${movie.primaryImage.url}")
                     }
                 }
 

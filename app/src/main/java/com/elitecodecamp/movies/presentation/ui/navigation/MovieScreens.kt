@@ -4,13 +4,13 @@ import java.lang.IllegalArgumentException
 
 enum class MovieScreens {
     HomeScreen,
-    DetailsScreen;
+    DetailScreen;
 
     companion object{
         fun fromRoute(route:String?):MovieScreens
         = when(route?.substringBefore("/")){
             HomeScreen.name -> HomeScreen
-            DetailsScreen.name -> DetailsScreen
+            DetailScreen.name -> DetailScreen
             null -> HomeScreen
             else -> throw IllegalArgumentException("Route $route is not recognized.")
         }

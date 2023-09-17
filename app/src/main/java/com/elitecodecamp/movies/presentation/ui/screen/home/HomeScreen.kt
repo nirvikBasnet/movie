@@ -2,7 +2,9 @@ package com.elitecodecamp.movies.presentation.ui.screen.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -18,7 +20,7 @@ import com.elitecodecamp.movies.presentation.ui.theme.MoviesTheme
 @Composable
 fun HomeScreen(navController: NavController,viewModel: MovieViewModel){
     MyApp {
-        MovieList(viewModel)
+        MovieList(viewModel,navController)
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,9 +29,9 @@ fun MyApp(content: @Composable () ->Unit ){
     MoviesTheme {
         Scaffold (
             topBar = {
-                TopAppBar(
-                    title = { Text("Movies") },
-                    colors = TopAppBarDefaults.largeTopAppBarColors(Color.Magenta)
+                CenterAlignedTopAppBar(
+                    title = { Text("Upcoming Movies", style = MaterialTheme.typography.headlineSmall) },
+                    colors = TopAppBarDefaults.largeTopAppBarColors(Color.Transparent)
                 )
             }
         ){
